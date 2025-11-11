@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import quiz_questions from '../../../assets/data/quiz_questions.json'
 
 @Component({
   selector: 'app-quizz',
@@ -24,4 +25,17 @@ export class Quizz {
   finished: boolean = false;
 
   constructor() {}
+
+  // método chamado quando o componente é inicializado, porém não está funcionando no browser, então ver depois o que pode estar acontecendo. Talvez a sintaxe esteja errada ou ultrapassada pra essa versão do Angular.
+  ngOnInit() {
+  if(quiz_questions) {
+    this.finished = false;
+    this.title = quiz_questions.title;
+
+    this.questions = quiz_questions.questions;
+    this.questionSelected = this.questions[this.questionIndex];
+    this.questionMaxIndex = this.questions.length;
+    }
+  }
 }
+
