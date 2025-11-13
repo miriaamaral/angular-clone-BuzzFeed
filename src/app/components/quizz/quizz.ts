@@ -16,8 +16,8 @@ export class Quizz {
   questions: any
   questionSelected: any
 
-  ansewers: string[] = [];
-  ansewerSelected: string = "";
+  answers: string[] = [];
+  answerSelected: string = "";
 
   questionIndex: number = 0;
   questionMaxIndex: number = 0;
@@ -41,8 +41,8 @@ export class Quizz {
   }
 
   playerChoose (value:string) {
-    this.ansewers.push(value)
-    console.log(this.ansewers)
+    this.answers.push(value)
+    this.nextStep()
   }
 
 
@@ -53,9 +53,40 @@ export class Quizz {
     if(this.questionMaxIndex > this.questionIndex) {
       this.questionSelected = this.questions[this.questionIndex]
     }else{
+      const finalAnswer:string = await this.checkResult(this.answers)
       this.finished = true
+      this.answerSelected = quiz_questions.results[finalAnswer as keyof
+        typeof quiz_questions.results] // tô falando que finalAnswers é uma chave do mesmo tipo do que ele esperava, porque ele não estava aceitando o any
+
+     // implementar verificação ganhadora
+    console.log(this.answers)
     }
   }
+
+
+  // Esse algoritmo é muito especifico, dificil até de se usar no dia a dia, pesquisamos como encontrar algoritmos matemáticos pra mais frequencia pra achar essa solução
+  // aqui vamos fazer um alógica mais matemática, pra encnntrar a resposta com maior frequencia (A ou B)
+  // usei o reduce porque quero reduzir as respostas em um único resultado
+  async checkResult(answers:string[]){
+    ['A', 'A', 'B', 'A']
+    const result = answers.reduce((previous, current, i, arr)=>{
+      if(
+        // vou percorrer as respostas e vou perguntar se a resposta e verificar se ele já esta sendo contailizado, achando a maior frequencia.
+        // dentro do array vou filtrar cada item (se o item é igual ao item anterior, no caso o previous, pego o tamanho dele com o length e pergunto se ele é maior que o que tem amis frequencia)
+          arr.filter(item => item === previous).length >
+          arr.filter(item => item === current).length
+      ){
+        // e se meu elemento anterior tiver mais que o elemento currente (atual) a lógioca é retornar o valor anterior
+          return previous
+      }else{
+        // se não, a lógica é retornar o elemento atual
+          return current
+      }
+    })
+        // Uma vez que identificamos quem aparece com mais frequencia a gente retorna o resultado
+          return result
+  }
+
 
 }
 

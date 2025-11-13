@@ -4,11 +4,18 @@
     <h3>{{title}}</h3>
   </div>
 
+   @if (!finished) {
   <div class="quizz_questions">
     <h3>{{questionSelected.question}}</h3>
   </div>
+}
 
-  <!-- mantive a sintaxe do *ngFor porque não deu nenhum erro, vou pesquisar mais sobre em outro momento -->
+  <!-- mantive a sintaxe do *ngFor porque não deu nenhum erro, vou pesquisar mais sobre em outro momento
+   e continuo usando o ngIf na nova sintaxe porque já entendi
+
+    negação (!) => desligo a caixinha de resposta quando tiver as de perguntas e desabilito as de perguntas quando for mostrar só a de resposta
+   -->
+   @if (!finished) {
   <div class="quizz_options">
     <button
     *ngFor="let option of questionSelected.options; let i = index"
@@ -18,13 +25,14 @@
       {{option.name}}
     </button>
   </div>
+}
 
 
   <!-- o @if é o antigo *ngIf, atualizei a sintaxe -->
   @if (finished) {
     <div class="quizz_results">
       <h1>O seu resultado é: </h1>
-      <p>resposta selecionada</p>
+      <p>{{answerSelected}}</p>
     </div>
   }
 
