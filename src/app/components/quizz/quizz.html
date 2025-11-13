@@ -8,13 +8,17 @@
     <h3>{{questionSelected.question}}</h3>
   </div>
 
+  <!-- mantive a sintaxe do *ngFor porque não deu nenhum erro, vou pesquisar mais sobre em outro momento -->
   <div class="quizz_options">
     <button
+    *ngFor="let option of questionSelected.options; let i = index"
+    (click)="playerChoose(option.alias)"
       class="btn-option"
     >
-      optionname
+      {{option.name}}
     </button>
   </div>
+
 
   <!-- o @if é o antigo *ngIf, atualizei a sintaxe -->
   @if (finished) {
@@ -23,4 +27,5 @@
       <p>resposta selecionada</p>
     </div>
   }
+
 </div>

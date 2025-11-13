@@ -34,8 +34,28 @@ export class Quizz {
 
     this.questions = quiz_questions.questions;
     this.questionSelected = this.questions[this.questionIndex];
+
+    this.questionIndex = 0;
     this.questionMaxIndex = this.questions.length;
     }
   }
+
+  playerChoose (value:string) {
+    this.ansewers.push(value)
+    console.log(this.ansewers)
+  }
+
+
+  // o objetivo dessa função é fazer o jogador ir para o próximo passo após selecionar a resposta escolhida
+  // seja a próxima questão ou se não tiver mais questões exibir o resultado.
+  async nextStep(){
+    this.questionIndex+=1 //pega o valor dele mesmo e soma com +1
+    if(this.questionMaxIndex > this.questionIndex) {
+      this.questionSelected = this.questions[this.questionIndex]
+    }else{
+      this.finished = true
+    }
+  }
+
 }
 
